@@ -1,0 +1,157 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .form-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        /* max-width: 800px; */
+        width: 40%;
+        margin: 30px auto;
+    }
+    .form-header {
+        display: flex;
+        /* justify-content: space-between; */
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .form-header h4 {
+        margin: 0;
+    }
+    .form-header a {
+        text-decoration: none;
+        font-size: 18px;
+        color: #007bff;
+    }
+    .form-section {
+        margin-bottom: 20px;
+    }
+    .form-section label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .form-section span, .form-section div, .form-section textarea {
+        display: block;
+        padding: 8px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .form-section textarea{
+        width: 100%;
+    }
+    .lineForIntegerInputs {
+        display: flex;
+        justify-content: space-between;
+        /* border: 1px solid; */
+    }
+
+    .imagePreview {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .imagePreview img {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .cost-block{
+      width: 50%;
+    }
+    .bonus-block{
+      width: 15%;
+    }
+    @media (max-width: 768px) {
+        .form-container {
+            width: 90%;
+        }
+        .lineForIntegerInputs {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .cost-block, .bonus-block {
+            width: 100%;
+        }
+        .form-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .form-header a {
+            font-size: 16px;
+        }
+        .form-header h4 {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-header">
+        <a class="bi bi-arrow-left" onclick="history.back()">Назад</a>
+       
+    </div>
+    <div class="form-header">
+      <h4>Просмотр {{object}}</h4>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      
+        <div class="form-section lineForIntegerInputs">
+            <div class="cost-block">
+                <label for="cost">Сумма:</label>
+                <span class="currency-text">{{product.cost}}</span>
+                
+            </div>
+            <div class="bonus-block">
+                <label for="bonus">Бонус:</label>
+                <span>{{product.bonus}}</span>
+            </div>
+            <div class="bonus-block">
+                <label for="exchange">Обмен:</label>
+                <span>{{product.exchange}}</span>
+            </div>
+        </div>
+        <div class="form-section">
+            <label for="comment">Комментария</label>
+            
+            {% if product.comment %}
+            <!-- <div style="display: flex; word-wrap: break-word;"></div> -->
+            <textarea name="" id="" readonly>{{product.comment}}</textarea>
+                {% else %}
+            <div>(отсутствует)</div>
+            {% endif %}
+        </div>
+        <div class="form-section">
+            <label for="date">Дата</label>
+            <div>{{product.date}}</div>
+        </div>
+        <div class="form-section lineForIntegerInputs" style="display: flex;flex-direction: row;justify-content: space-between; margin-bottom: 15px;">
+            <div style="width: 48%;">
+                <label for="confirmed">Подтверждение</label>
+                <div>{{product.confirmed}}</div>
+            </div>
+           {% if product.confirmed%}
+           <div style="width: 48%;">
+            <label for="payment">Оплата:</label>
+            <div>
+                {{product.payment}}{% if product.payment == 'mix'%} ({{product.cash_amount}} + {{product.transfer_amount}}) {% endif %}
+            </div>
+        </div>
+           {% endif %}
+        </div>
+        <div class="form-section imagePreview">
+            {% for image in product.images.all %}
+                <a href="/media/{{image.images}}" target="_top">
+                    <img src="/media/{{image.images}}" width="100" alt="">
+                </a>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+

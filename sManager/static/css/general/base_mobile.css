@@ -1,0 +1,161 @@
+
+.custom-modal-content {
+    width: 80% !important;
+    margin: 10px 0 !important;
+}
+.custom-options-container {
+    /* display: block !important; */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.date-title-general{
+    display: block !important;
+}
+
+div.date-title, .sum_button{
+    width: 100% !important;
+}
+
+.modal-content{
+    width: 90% !important;
+}
+.edit-container{
+    width: 90% !important;
+}
+
+.box_outline_general, form.phone_form, .result_section_box_outline{
+    width: 90% !important;
+}
+.profile_details_more, .profile_details_change{
+    width: 90% !important;
+}
+
+
+.profile_box{
+overflow: hidden;
+    }
+.profile_details_see{
+    width: 90% !important;
+    height: auto !important;
+    display: flex;
+    padding-top: 10px;
+    flex-direction: column;
+    
+    
+}
+.profile_details_see > .img_part{
+    /* border: 1px solid purple; */
+    width: 80% !important;
+    margin: auto;
+}
+.profile_details_see > .details_part{
+    /* border: 1px solid purple; */
+    width: 100% !important;
+}
+/* .profile_details_see .username{
+
+    display: none;} */
+    
+.profile_details_see .other_details{
+/* border: 1px solid; */
+    display: block;
+}
+.other_details button.updateBtn{
+     width: 100% !important;
+    margin-bottom: 10px;
+}
+.profile_details_see .main_detail{
+    /* border: 1px solid !important; */
+}
+.custom-modal-profile > .custom-modal-content-profile{
+    width: 90% !important;
+}
+.profile_details input:not(.mb-3 input){
+    margin-bottom: 25px !important;
+}
+.mb-3{
+    width: 100% !important;
+}
+.mb-3 button{
+height: auto!important;}
+
+
+
+.container-custom>form:not(.sort_form){
+    /* border: 1px solid !important; */
+    width: 100% !important;
+    margin-top: 20px;
+}
+.lineForIntegerInputs{
+    flex-direction: column;
+}
+.search-add-line input, .search-add-line a{
+    /* width: 40vw !important; */
+    width: 80vw !important;
+    margin-top: 20px;
+    /* display: none; */
+}
+.search-add-line{
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    
+}
+.container-custom{
+    /* border: 1px solid; */
+    /* overflow-x: scroll; */
+    /* overflow-x: hidden; */
+    padding-bottom: 100px;
+}
+
+.form-container {
+    width: 90%;
+}
+.lineForIntegerInputs {
+    flex-direction: column;
+    gap: 10px;
+}
+.cost-block, .bonus-block {
+    width: 100%;
+}
+.form-header {
+    flex-direction: column;
+    align-items: flex-start;
+}
+.form-header a {
+    font-size: 16px;
+}
+.form-header h4 {
+    font-size: 20px;
+    margin-top: 10px;
+}
+form{
+    width: 100% !important;
+    /* display: none !important; */
+}
+.container-history{
+    width: 100% !important;
+}
+td,th{
+    min-width: 250px !important;
+}
+table{
+    overflow-x: scroll !important;
+   
+}
+.secondary-data{
+    display: none;
+}
+.oneLine{
+    display: block   !important;
+}
+.oneLine > div{
+    width: 100% !important;
+}
+.tableSort,.supTable{
+    margin-top: 40px !important;
+}

@@ -1,0 +1,177 @@
+
+.supplier_hint_list_all{
+    height: auto;
+    /* border: 1px solid; */
+    border-radius: 4px;
+    display: none;
+    max-height:200px  ;
+    /* padding-top: 50px; */
+    overflow-y: scroll;
+    position: relative !important;
+  }
+  .supplier_hint_list_all .supplier_hint_list{
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    /* display: none; */
+  }
+  
+  
+
+    
+    .input_with_hints{
+      /* border: 1px solid #ccc; */
+      border-radius: 4px;
+      
+      
+    }  
+    #supply_input:focus{
+      outline: none;
+    }
+    
+    .supplier_hint_list.selected {
+      background-color: #f0f0f0; /* Background color for the selected hint */
+      font-weight: bold; /* Make the text bold for the selected hint */
+  }
+  .supplier_hint_list:hover{
+    background-color: #f0f0f0; /* Background color for the selected hint */
+    font-weight: bold; /* Make the text bold for the selected hint */
+  }
+  
+  .supplier_hint_list:nth-child(1){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+  .supplier_hint_list:nth-child(1) a{
+    display: flex;
+    align-items: center;
+    /* border: 1px solid; */
+    width: 60%;
+    justify-content: center;
+    gap: 10px;
+  }
+  .helptext{
+    display: block;
+    color: red;
+  }
+  form {
+  width: 40%;
+    margin-top: 10px;
+    padding: 20px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1.5px solid #8f8a8a;
+}
+
+form label:not(.paymentType) {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input:not([type='radio']),
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+
+  .lineForIntegerInputs{
+    display: flex;
+    justify-content: space-between;
+  }
+
+/* select{
+  padding: 10px !important;
+  width: 100%;
+  background-color: #f5f5f5;
+} */
+ 
+.switch_password{
+  display: flex;
+  /* border: 1px solid; */
+  gap: 10px;
+}
+
+.fileChoose{
+  border: 1px solid !important;
+  position: relative;
+}
+.fileChoose span{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+  font-size: larger;
+  /* border: 1px solid; */
+    }
+    .checkbox-wrapper-65 *,
+  .checkbox-wrapper-65 ::after,
+  .checkbox-wrapper-65 ::before {
+    box-sizing: border-box;
+  }
+  .checkbox-wrapper-65 .cbx {
+    position: relative;
+    display: block;
+    float: left;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    margin:0px 4px;
+    background-color: #606062;
+    background-image: linear-gradient(#dedeeb, #c4c4d4);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -1px 1px rgba(0,0,0,0.15);
+    transition: all 0.15s ease;
+  }
+  .checkbox-wrapper-65 .cbx svg {
+    position: absolute;
+    top: 5px;
+    left:5px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 17;
+    stroke-dashoffset: 17;
+    transform: translate3d(0, 0, 0);
+  }
+  .checkbox-wrapper-65 .cbx + span {
+    float: left;
+    margin-left: 6px;
+  }
+  .checkbox-wrapper-65 {
+    user-select: none;
+  }
+  .checkbox-wrapper-65 label {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .checkbox-wrapper-65 input[type="checkbox"] {
+    display: none;
+    visibility: hidden;
+  }
+  .checkbox-wrapper-65 input[type="checkbox"]:checked + .cbx {
+    background-color: #606062;
+    background-image: linear-gradient(#255cd2, #1d52c1);
+  }
+  .checkbox-wrapper-65 input[type="checkbox"]:checked + .cbx svg {
+    stroke-dashoffset: 0;
+    transition: all 0.15s ease;
+  }

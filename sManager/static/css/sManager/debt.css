@@ -1,0 +1,85 @@
+
+.clients_hint_list_all{
+    height: auto;
+    /* border: 1px solid; */
+    border-radius: 4px;
+    display: none;
+    max-height:200px  ;
+    /* padding-top: 50px; */
+    overflow-y: scroll;
+    position: relative !important;
+  }
+  .clients_hint_list_all .clients_hint_list{
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    /* display: none; */
+  }
+  
+  
+
+    
+    .input_with_hints{
+      /* border: 1px solid #ccc; */
+      border-radius: 4px;
+      
+      
+    }  
+    #client_input:focus{
+      outline: none;
+    }
+    
+    .clients_hint_list.selected {
+      background-color: #f0f0f0; /* Background color for the selected hint */
+      font-weight: bold; /* Make the text bold for the selected hint */
+  }
+  .clients_hint_list:hover{
+    background-color: #f0f0f0; /* Background color for the selected hint */
+    font-weight: bold; /* Make the text bold for the selected hint */
+  }
+  
+  .clients_hint_list:nth-child(1){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    position: sticky;
+    top: 0;
+    left: 0;
+  }
+  .clients_hint_list:nth-child(1) a{
+    display: flex;
+    align-items: center;
+    /* border: 1px solid; */
+    width: 60%;
+    justify-content: center;
+    gap: 10px;
+  }
+  .helptext{
+    display: block;
+    color: red;
+  }
+  form {
+  width: 40%;
+    margin-top: 10px;
+    padding: 20px;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1.5px solid #8f8a8a;
+}
+
+form label:not(.paymentType) {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input:not([type='radio']),
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}

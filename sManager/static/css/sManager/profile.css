@@ -1,0 +1,536 @@
+:root {
+  --good-blue: #0773e7c6;
+}
+
+.profile_box {
+  /* border: 1px solid; */
+  /* background-color: aqua; */
+  width: 100%;
+  min-height: 90vh;
+  height: auto !important;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid; */
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.profile_details_see {
+  width: 70%;
+  height: 35vh;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  margin-top: 40px;
+
+
+}
+
+.img_part {
+  width: 25%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+
+}
+
+* {
+  /* border: 1px solid purple; */
+}
+
+.img_part img {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  border-radius: 50%;
+  object-fit: contain;
+
+}
+
+.details_part {
+  width: 75%;
+  height: 100%;
+  display: block;
+}
+
+.username span {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.username {
+  height: 40%;
+  display: flex;
+  align-items: center;
+  font-size: xx-large;
+  gap: 2%;
+  color: #0773e7c6;
+  flex-wrap: wrap;
+  /* border: 1px solid !important; */
+}
+
+.other_details {
+  height: 40%;
+  display: flex;
+  /* flex-direction: column; */
+  gap: 30px;
+  padding: 20px;
+  /* border: 1px solid purple; */
+
+
+}
+
+small {
+  color: #9d9c9c;
+}
+
+.other_details * {
+  width: 35%;
+
+}
+
+.main_detail * {
+  /* border: 1px solid purple; */
+}
+
+.main_detail {
+  padding-left: 30px;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* border: 1px solid; */
+
+}
+
+.section_general {
+  width: 60%;
+  height: 70vh;
+  height: auto;
+  /* background-color: #fff; */
+  border-radius: 10px;
+  display: block;
+}
+
+.profile_details_change {
+  width: 100%;
+  height: 100vh;
+  /* background-color: #fff; */
+  border-radius: 10px;
+  display: block;
+}
+
+.profile_details,
+.todolist_section {
+  width: 100%;
+  height: 90%;
+  /* background-color: #fff; */
+  background: #f0f0f0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.profile_details input {
+  padding: 9px 20px;
+  font-size: large;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.input-group {
+  position: relative;
+  /* border: 1PX solid !important; */
+  border-radius: 5PX;
+  overflow: hidden;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.input-group button {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: -10px !important;
+  z-index: 10 !important;
+  background-color: transparent !important;
+  display: flex !important;
+  height: 100%;
+  justify-content: center !important;
+  align-items: center !important;
+  /* border: 1px solid !important; */
+
+}
+
+.mb-3 {
+
+  width: 50%;
+}
+
+.mb-3 input {
+  padding: 5px 10px;
+}
+
+.profile_details_more h2 {
+  margin-bottom: 10px;
+
+}
+
+.profile_details {
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+.updateBtn {
+  transition: background-color 0.3s ease;
+  border: 1px solid !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 5px;
+  gap: 10px;
+  flex-wrap: nowrap !important;
+  overflow: hidden;
+}
+
+.other_details button:nth-child(1) {
+
+  width: 45%;
+
+}
+
+.updateBtn:nth-child(2) {
+  background-color: #dc3545;
+  ;
+  /* Change the color to your desired hover effect */
+  color: white;
+
+
+
+}
+
+* Rounded sliders */ .slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: #2196F3;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.switch_password {
+  display: flex;
+  margin: 10px 0;
+  /* border: 1px solid; */
+  gap: 10px;
+}
+
+/* .passwordBlock{
+    display: none;
+} */
+.passwordBlock {
+  /* flex-direction: column; */
+  gap: 10px;
+  display: flex;
+}
+
+/* Style messages */
+
+
+
+
+.custom-modal-profile {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+
+
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-modal-content-profile {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container {
+  width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Styling for labels and input fields */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.custom-modal-content-profile form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+  font-size: larger;
+}
+
+/* Styling for buttons */
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.button-container button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Style Cancel button */
+.cancel-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+/* Style Close Session button */
+.close-session-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Стили для элемента .custom-todolist-section-general оставляем без изменений */
+/* Стили для элемента .custom-todolist-section-general оставляем без изменений */
+
+/* Стили для .custom-todolist-section и внутреннего содержимого */
+.custom-todolist-section {
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  margin-top: 20px;
+
+
+}
+
+
+.custom-todolist-section form {
+  display: flex;
+  align-items: center;
+
+}
+
+.custom-todolist-section input[type="search"],
+.custom-todolist-section input[type="date"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.custom-todolist-section input[type="search"] {
+  flex: 1;
+}
+
+.custom-todolist-section input[type="date"] {
+  flex: 0.3;
+}
+
+.custom-todolist-section button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.custom-todolist-content {
+  margin-top: 20px;
+}
+
+.task-date {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-item {
+  margin-bottom: 20px;
+}
+
+.task-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
+  /* Перенос длинных слов */
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.task-card .bi-trash {
+  /* position: absolute;
+  top: 10px;
+  right: 10px; */
+  font-size: larger;
+
+  opacity: 0;
+  /* Начально скрыто */
+  transition: opacity 0.2s ease-in-out;
+}
+
+.task-card:hover .bi-trash {
+  opacity: 1;
+  /* Отображается при наведении на карточку задачи */
+}
+
+.custom-modal *,
+.custom-modal {
+  z-index: 4 !important;
+}
+
+/* Стили для модального окна */
+.custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+
+
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-modal-content {
+  /* background-color: #fefefe; */
+  /* background-color: transparent; */
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-options-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.formBtnLine {
+  /* border: 1px solid; */
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
+
+#context_menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 1000;
+}
+
+#delete_option {
+  cursor: pointer;
+  color: red;
+}

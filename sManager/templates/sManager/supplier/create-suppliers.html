@@ -1,0 +1,138 @@
+{% extends 'general/base.html'%}
+{% load static%}
+
+{% block content %}
+
+<form action="" method="post" autocomplete="off" spellcheck="false">
+     <a onclick="history.back()" class="bi bi-arrow-left return-back" >Вернуться назад</a>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+{% csrf_token%}
+    <div class="helptext" style="display: none;"></div>
+    <div class="alert alert-danger" role="alert" style="display: none; width: 100% !important;">
+      <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->
+    </div>
+
+    <div>
+      <label for="id_name">Название поставщика</label>
+      {{form.name}}
+    </div>
+    <div class="oneLine">
+      <div>
+        <label for="id_supervisor">Имя супервайзера</label>
+      {{form.supervisor}}
+      </div>
+      <div>
+        <label for="id_tel_number_supervisor">Номер Телефона(супервайзер)</label>
+      {{form.tel_number_supervisor}}
+      </div>
+    </div>
+    <div class="oneLine">
+      <div>
+        <label for="id_salesman">Имя торг. представителя</label>
+      {{form.salesman}}
+      </div>
+      <div>
+        <label for="id_tel_number_salesman">Номер Телефона(торг. Представитель)</label>
+      {{form.tel_number_salesman}}
+      </div>
+    </div>
+    <div class="oneLine">
+      <div>
+        <label for="id_delivery">Имя доставки</label>
+      {{form.delivery}}
+      </div>
+      <div>
+        <label for="id_tel_number_delivery">Номер Телефона(доставка)</label>
+      {{form.tel_number_delivery}}
+      </div>
+         
+    </div>
+    <div>
+      <label for="id_extra_info">Доп. информация</label>
+      {{form.extra_info}}
+    </div>
+    <button type="submit" class="submit">Создать</button>
+</form>
+{% endblock content %}
+{% block externals %}
+<script>
+    var data_list ={{suppliers|safe}}
+    var dataObject = {};
+
+// Проходим по массиву и добавляем элементы в объект
+for (var i = 0; i < data_list.length; i++) {
+    var id = data_list[i].id;
+    var name = data_list[i].name.toLowerCase().trim();
+
+    // Добавляем элемент в объект
+    dataObject[name] = id;
+}
+
+    const helptext = document.querySelector('.alert.alert-danger')
+
+var name = '';
+var exists = false
+<!--console.log(arrayOfNames)-->
+document.querySelector('input[name="name"]').addEventListener('input', (event) => {
+    name = event.target.value.toLowerCase().trim()
+    if (name in dataObject){
+        helptext.style.display = 'block'
+        console.log(dataObject)
+        helptext.innerHTML =  `Поставщик <a class="alert-link" href="/suppliers/edit/${dataObject[name]}">${name.charAt(0).toUpperCase()}${name.slice(1)}</a> уже существует в вашей базе. Пожалуйста, выберите другое название.`
+        exists = true
+    }
+    else{
+        helptext.style.display = 'none'
+        helptext.innerHTML = ''
+        exists = false
+    }
+
+})
+
+document.querySelectorAll('.tel-number-mask').forEach(each => {
+    IMask(
+    each,
+    {
+        mask: '+7(000)000-00-00'  ,
+      blocks: {
+        num: {
+          // nested masks are available!
+          mask: Number,
+          thousandsSeparator: '.'
+        }
+      }
+    }
+  )
+
+})
+    document.querySelector('.submit').addEventListener('click', (event) => {
+      if(exists){
+    event.preventDefault()
+    window.scrollTo(0,0)
+  }
+  else if(document.querySelector('input[name="name"]').value.length == 0){
+    event.preventDefault()
+    window.scrollTo(0,0)
+    helptext.style.display = 'block'
+    helptext.innerHTML = 'Необходимо ввести название поставщика'
+    
+  }
+        else{
+         document.querySelector('form').submit()
+        }
+    })
+</script>
+<link rel="stylesheet" href="{% static 'css/sManager/create-supplier.css'%}">
+<style>
+    .helptext{
+    display: block;
+    color: red;
+  }
+</style>
+{% endblock externals %}

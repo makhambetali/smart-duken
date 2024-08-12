@@ -1,0 +1,113 @@
+{% extends 'general/base.html'%}
+{% load static%}
+
+{% block content %}
+<div style="margin: 0 auto;"><input type="date" name="date" id="" >
+    <button onclick="find()" class="find_btn" >Найти</button></div>
+    <table class="date_group date_group show_group" >
+        <tr>
+            <th>Поставщик</th>
+            <th style="min-width: 100px;">Сумма</th>
+            <th>Бонус</th>
+            <th>Обмен</th>
+            <th>Комментарии</th>
+           
+        </tr>
+    </table>
+{% endblock content %}
+{% block externals %}
+<link rel="stylesheet" href="{% static 'css/sManager/home.css'%}">
+<script>
+    
+var data_list = {{ suppliers|safe }};
+
+// Создаем новый объект
+var dataObject = {};
+var financeObject
+// Проходим по массиву и добавляем элементы в объект
+for (var i = 0; i < data_list.length; i++) {
+    var id = data_list[i].id;
+    var name = data_list[i].name;
+
+    // Добавляем элемент в объект
+    dataObject[id] = name;
+}
+
+
+var date = new Date();
+date.setDate(date.getDate() -1);
+var prevDate = date.toISOString().substring(0, 10);
+document.querySelector('input[type=date]').value = prevDate;
+document.querySelector('input[type=date]').max = prevDate
+const redirectTo = (id) => {
+      window.location.href = `view/${id}`
+    }
+
+ const find = () => {
+    const date = document.querySelector('input[type=date]').value
+    const encodedDate = encodeURIComponent(date);
+    // alert(encodedDate)
+    // getCalculations(encodedDate)
+    fetch(`/history/${encodedDate}`)
+        .then(response => response.json())
+        .then(data => { 
+            // Find the table element
+            const table = document.querySelector('.date_group');
+            console.log(data)
+            // Check if the table element exists
+            if (table) {
+                // Clear the existing content
+                table.innerHTML = `<tr><th>Поставщик</th><th style="min-width: 100px;">Сумма</th><th>Бонус</th><th>Обмен</th><th>Комментарии</th></tr>`;
+
+                // Add rows with data
+                data.products.forEach(product => {
+                    const row = table.insertRow(-1);
+                    row.onclick = function() {
+    redirectTo(product.id);
+};                     const formattedCost = window.formatCurrency(product.cost);
+    if (product.confirmed)
+                    {
+                        row.innerHTML = `
+                        <td class="bi bi-check-circle"><a href="/history/view/${product.id}">${dataObject[product.name_id]}</a></td>
+                        <td >${formattedCost}</td>
+                        <td style="color:${product.bonus == 0 ? '' : '#218838'}; font-weight: bold;">${product.bonus}</td>
+                        <td style="color:${product.exchange == 0 ? '' : '#c82333'}; font-weight: bold;">${product.exchange}</td>
+                        <td title="${product.comment}">${product.comment.substring(0, 80)}</td>
+                        `;
+                    }
+                    else{
+                        row.innerHTML = `
+                        <td ><a href="/history/view/${product.id}">${dataObject[product.name_id]}</a></td>
+                        <td  >${formattedCost}</td>
+                        <td  style="color:${product.bonus == 0 ? '' : '#218838'}; font-weight: bold;">${product.bonus}</td>
+                        <td  style="color:${product.exchange == 0 ? '' : '#c82333'}; font-weight: bold;">${product.exchange}</td>
+                        <td  title="${product.comment}">${product.comment.substring(0, 50)}</td>
+                        `;
+                    }
+                   
+                      
+                     
+                });
+            } else {
+                console.error('Table element not found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+}
+// find()
+document.querySelector('.find_btn').click()
+
+
+</script>
+<style>
+    .container-history{
+    width: 80%;
+    margin: 0 auto;
+}   
+
+
+</style>
+{% endblock externals %}

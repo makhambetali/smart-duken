@@ -1,0 +1,41 @@
+{% extends 'general/base.html'%}
+{% load static%}
+
+{% block content %}
+
+ 
+<div class="search-add-line">
+    <a class="bi bi-plus-lg" href="{% url 'sManager:supplier-create'%}" style="text-decoration: none; border: 1px solid; text-align: center;"> Добавить</a>
+    <input type="search" id="searchInput" spellcheck="false" placeholder="ex: Фудмастер">
+</div>
+
+<table id="search-table" class="table table-hover date_group show_group supTable">
+    <tr>
+        <th>Название</th>
+        <th class="secondary-data">Супервайзер</th>
+        <th class="secondary-data">Номер супервайзера</th>
+        <th class="secondary-data">Дополнительное имя</th>
+        <th class="secondary-data">Торговый Представитель</th>
+        <th class="secondary-data">Номер Телефона торг. представителя</th>
+        <!-- <th colspan="2">Изменение</th> -->
+    </tr>
+    {% for supplier in suppliers %}
+    <tr id = '{{supplier.id}}' onclick="window.location.href = `edit/${this.id}`">
+        <td><a style="text-decoration: none;" href="{% url 'sManager:supplier-edit' supplier.id%}">{{ supplier.name }}</a></td>
+        <td class="secondary-data">{{ supplier.supervisor }}</td>
+        <td class="secondary-data">{{ supplier.tel_number_supervisor }}</td>
+        <td class="secondary-data">{{ supplier.second_name }}</td>
+        <td class="secondary-data">{{ supplier.salesman }}</td>
+        <td class="secondary-data">{{ supplier.tel_number_salesman }}</td>
+        </tr>
+        {% empty %}
+        <td colspan="6" style="text-align: center; font-size: large; font-weight: bold;">Поставщики еще не добавлены</td>
+{% endfor %}
+</table>
+
+{% endblock content %}
+{% block externals %}
+<link rel="stylesheet" href="{% static 'css/sManager/home.css'%}">
+<script src="{% static 'js/lib/search-table.js'%}"></script>
+
+{% endblock externals %}

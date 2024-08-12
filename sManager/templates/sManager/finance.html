@@ -1,0 +1,80 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+
+<h1>Вложение и затраты</h1>
+<table   class="date_group_{{forloop.counter}} date_group show_group ">
+    <tr>
+        <th>Дата и время</th>
+        <th>Операция</th>
+        <th>Доп. информация</th>
+    </tr>
+    {% for money in moneys %}
+    <tr {% if money.content.0 == '+' %}
+    style="background-color: #a9dfbf;"
+{% elif money.content.0 == '-' %}
+    style="background-color: #f5b7b1;"
+{% endif %}
+    onclick="window.location.href = '/money/edit/{{money.id}}'"
+>
+       <td>{{money.datetime}}</td>
+       <td {% if money.content.0 == '+' %}
+    style="  font-weight: bold;"
+{% elif money.content.0 == '-' %}
+    style=" font-weight: bold;"
+{% endif %}
+   
+>{{money.content}}</td>
+
+       <td>{% if money.text == None %} {% else %} {{money.text}} {% endif %}</td>
+    </tr>
+    {% empty %}
+    <td colspan="3" style="text-align: center; font-size: large; font-weight: bold;">Записей пока нет</td>
+{% endfor %}
+    <!-- Добавьте больше строк данных по мере необходимости -->
+</table>
+
+<h1>Финансовый отчет за месяц</h1>
+<table  class=" date_group show_group table table-hover " >
+    <tr>
+        <th>Дата</th>
+        <th>Общая сумма</th>
+        <th>Наличная сумма</th>
+        <th>Банковский Счет</th>
+        <th>Внесение</th>
+        <th>Затраты</th>
+    </tr>
+    <tr>
+        <td >Сегодня</td>
+        <td class="currency-text">{{today.total}}</td>
+        <td class="currency-text">{{today.cash}}</td>
+        <td class="currency-text">{{today.transfer}}</td>
+        <td class="currency-text">{{today.income}}</td>
+        <td class="currency-text">{{today.expense}}</td>
+    </tr>
+       {% for record in records %}
+       <tr>
+        <td >{{record.date}}</td>
+        <td class="currency-text">{{record.total_amount}}</td>
+        <td class="currency-text">{{record.cash_amount}}</td>
+        <td class="currency-text">{{record.transfer_amount}}</td>
+        <td class="currency-text">{{record.income}}</td>
+        <td class="currency-text">{{record.expense}}</td>
+       </tr>
+       {% endfor %}
+    
+</table>
+
+
+
+{% endblock content %}
+{% block externals %}
+<style>
+    
+    h1{
+        margin: 10px ;
+    }
+   
+</style>
+<link rel="stylesheet" href="{% static 'css/sManager/home.css'%}">
+{% endblock externals %}

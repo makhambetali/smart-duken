@@ -1,0 +1,279 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .checkbox-wrapper-65 *,
+  .checkbox-wrapper-65 ::after,
+  .checkbox-wrapper-65 ::before {
+    box-sizing: border-box;
+  }
+  .checkbox-wrapper-65 .cbx {
+    position: relative;
+    display: block;
+    float: left;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    margin:0px 4px;
+    background-color: #606062;
+    background-image: linear-gradient(#dedeeb, #c4c4d4);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.15), inset 0 -1px 1px rgba(0,0,0,0.15);
+    transition: all 0.15s ease;
+  }
+  .checkbox-wrapper-65 .cbx svg {
+    position: absolute;
+    top: 5px;
+    left:5px;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-dasharray: 17;
+    stroke-dashoffset: 17;
+    transform: translate3d(0, 0, 0);
+  }
+  .checkbox-wrapper-65 .cbx + span {
+    float: left;
+    margin-left: 6px;
+  }
+  .checkbox-wrapper-65 {
+    user-select: none;
+  }
+  .checkbox-wrapper-65 label {
+    display: inline-block;
+    cursor: pointer;
+  }
+  .checkbox-wrapper-65 input[type="checkbox"] {
+    display: none;
+    visibility: hidden;
+  }
+  .checkbox-wrapper-65 input[type="checkbox"]:checked + .cbx {
+    background-color: #606062;
+    background-image: linear-gradient(#255cd2, #1d52c1);
+  }
+  .checkbox-wrapper-65 input[type="checkbox"]:checked + .cbx svg {
+    stroke-dashoffset: 0;
+    transition: all 0.15s ease;
+  }
+</style>
+
+
+  <form method="post" enctype="multipart/form-data">
+    <a onclick="history.back()" class="bi bi-arrow-left return-back" >Вернуться назад</a>
+  <h4>Изменение {{object}}</h4>
+    {% csrf_token %}
+ 
+    <div class="lineForIntegerInputs">
+      <div>
+          <label for="cost" id="cost">Сумма:</label>
+          {{form.cost}}
+          <div class="helptext" style="display: none;">Минимальная сумма: 10тг</div>
+         
+      </div>
+      <div><label for="bonus" id="bonus">Бонус:</label>{{form.bonus}}</div>
+      <div><label for="exchange" id="exchange">Обмен:</label>{{form.exchange}}</div>
+      
+  </div>
+  
+  <label for="comment" id="comment">Комментария</label> {{form.comment}}
+ 
+  <label for="date">Дата</label> {{form.date}}
+
+    
+  <div style="display: none;">
+    {{form.confirmed}}
+    {{form.payment}}
+  </div>
+    
+  
+
+  {% if today == date %}
+<div style="display: flex;  " >  
+  <span>Подтверждение поставки:  </span> 
+  <div class="checkbox-wrapper-65">
+  <label for="cbk1-65">
+    <input type="checkbox" class="confirm_checkbox" onchange="changeCheckBox(this)" id="cbk1-65">
+    <span class="cbx">
+      <svg width="30px" height="30px" viewBox="0 0 20 20">
+        <polyline points="1 6.29411765 4.5 10 11 1"></polyline>
+      </svg>
+    </span>
+   
+  </label>
+  </div>
+</div>
+<div  >
+  <div>
+    <input type="radio" id="cash" name="radio" onchange="changePaymentType(this,0)"   />
+  <label class="paymentType" for="cash">Нал</label>
+  </div>
+  <div>
+    <input type="radio" id="transfer" name="radio"   onchange="changePaymentType(this,1)" />
+  <label class="paymentType" for="transfer">Банковский счет</label>
+  
+  </div>
+  <div>
+    <input type="radio" id="mix" name="radio"   onchange="changePaymentType(this,2)" />
+  <label class="paymentType" for="mix">Смешенная оплата</label>
+  
+  </div>
+{% if product.payment == 'mix' %}
+
+<div style="display: flex; gap: 20px; margin: 10px auto;" class="mix-inputs">
+  <div style="width: 100%;">
+    <label for="mix-cash">Наличка</label>
+  <input type="text" id="mix-cash" name="mix-cash"   required maxlength="10" oninput="check_sum()" value="{{product.cash_amount}}">
+  </div>
+  <div style="width: 100%;">
+    <label for="mix-transfer">Банковский счёт</label>
+  <input type="text" id="mix-transfer" name="mix-transfer" required maxlength="10" oninput="check_sum()" value="{{product.transfer_amount}}">
+  </div>
+</div>
+<div class="alert alert-danger mix-warning" style="display: none;">Данные не совпадают: Сумма двух ячеек отличается от общей суммы</div>
+</div>
+{% else %}
+
+<div style="display: none; gap: 20px; margin: 10px auto;" class="mix-inputs">
+  <div style="width: 100%;">
+    <label for="mix-cash">Наличка</label>
+  <input type="text" id="mix-cash" name="mix-cash"   required maxlength="10" oninput="check_sum()" value="0">
+  </div>
+  <div style="width: 100%;">
+    <label for="mix-transfer">Банковский счёт</label>
+  <input type="text" id="mix-transfer" name="mix-transfer" required maxlength="10" oninput="check_sum()" value="0">
+  </div>
+</div>
+<div class="alert alert-danger mix-warning" style="display: none;">Данные не совпадают: Сумма двух ячеек отличается от общей суммы</div>
+</div>
+{% endif %}
+ 
+  <input type="file" name="files" class="files"onchange="previewImages(this)" multiple accept=".png, .jpg, .jpeg">
+  <div class="imagePreview">
+    <div class="imageEditing">
+      {% for image in product.images.all %}
+
+      <a href="/media/{{image.images}}" target="_top"><img src="/media/{{image.images}}" width="100" alt=""></a>
+
+
+     {% endfor %}</div>
+
+
+
+   </div>
+   {% else %}
+   <script>
+    document.querySelector('.confirmed-payment').style.display='none'
+   </script>
+  {% endif %}
+    <a href="{% url 'sManager:delete-supply' pk=product.id%}" class="btn btn-danger">Удалить</a>
+    <button type="submit" style="margin-left: auto; margin-right: 0;" class="btn btn-success editBtn">Изменить</button>
+  </form>
+  
+{% endblock %}
+
+{% block externals %} 
+<script src="{% static 'js/update_supply.js'%}"></script>
+<link rel="stylesheet" href="{% static 'css/sManager/create_supply.css'%}">
+<script>
+document.querySelector('input[type=date]').value = '{{date|date:"Y-m-d"}}'</script>
+<!-- <script src="{% static 'js/create_supply.js'%}"></script> -->
+<style>
+  form{
+    margin: 20px auto !important;
+  }
+</style>
+<script>
+  const input_cash = document.querySelector('#mix-cash')
+const input_transfer = document.querySelector('#mix-transfer')
+const overall = document.querySelector('.currency-mask')
+const mix_warning = document.querySelector('.mix-warning')
+  var state_confirmed =  !!({{form.confirmed.value|yesno:"1,0"}})
+  var state_payment = {{form.payment.value}}
+  console.log(state_payment.id)
+  var elem = document.querySelector('.confirm_checkbox')
+  if(state_confirmed){
+    elem.checked = state_confirmed
+  }
+  const changeCheckBox = ()=> {
+    state_confirmed = !state_confirmed
+    document.querySelectorAll('#id_confirmed option')[+(!state_confirmed)+1].selected = true
+  }
+
+document.querySelector(`input#${state_payment.id}`).checked = true
+const changePaymentType = (el,index) => {
+  console.log(el.id)
+  document.querySelectorAll('#id_payment option')[index].selected = true
+  if (index == 2){
+    document.querySelector('.mix-inputs').style.display = 'flex'
+    // mix_warning.style.display='flex'
+    check_sum()
+  }
+  else{
+    
+    document.querySelector('.mix-inputs').style.display = 'none'
+    mix_warning.style.display='none'
+    document.querySelector('.editBtn').disabled= false
+  }
+}
+document.querySelectorAll('.mix-inputs input').forEach((each,index) => {
+  IMask(
+    each,
+    {
+        mask: '₸ num',
+        blocks: {
+            num: {
+                // nested masks are available!
+                mask: Number,
+                thousandsSeparator: '.'
+            }
+        }
+    }
+)
+})
+
+const check_sum = () => {
+  var cash_value = input_cash.value
+  var transfer_value = input_transfer.value
+  var cash_value_int = +(cash_value.replace(/\D/g, ''))
+  var transfer_value_int = +(transfer_value.replace(/\D/g, ''))
+  var overall_value_int = +(overall.value.replace(/\D/g, ''))
+  if(cash_value.length >= 3 && transfer_value.length >= 3){
+    if(cash_value_int + transfer_value_int == overall_value_int){
+      // alert()
+      mix_warning.style.display = 'none'
+      document.querySelector('.editBtn').disabled= false
+    }
+    else{
+      
+      mix_warning.style.display = 'block'
+      document.querySelector('.editBtn').disabled= true
+    
+    }
+  }
+  // console.log(arr)
+
+}
+// check_sum()
+overall.addEventListener('input', () => {
+  if(document.querySelector('.mix-inputs').style.display == 'flex'){
+    var cash_value = input_cash.value
+    var transfer_value = input_transfer.value
+    var cash_value_int = +(cash_value.replace(/\D/g, ''))
+    var transfer_value_int = +(transfer_value.replace(/\D/g, ''))
+    var overall_value_int = +(overall.value.replace(/\D/g, ''))
+    if(cash_value_int + transfer_value_int != overall_value_int){
+      // alert()
+      mix_warning.style.display = 'block'
+      document.querySelector('.editBtn').disabled= true
+    }
+    else{
+      mix_warning.style.display = 'none'
+      document.querySelector('.editBtn').disabled= false
+    }
+  }
+
+})
+</script>
+
+{% endblock externals %} 

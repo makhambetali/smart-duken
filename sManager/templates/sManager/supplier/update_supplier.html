@@ -1,0 +1,140 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <form method="post" enctype="multipart/form-data" >
+  
+      
+  <a onclick="history.back()" class="bi bi-arrow-left return-back" >Вернуться назад</a>
+  <h4>Изменение {{object}}</h4>
+  
+      <input type="hidden" name="object_old" value="{{object}}" id="{{object.id}}">
+    {% csrf_token %}
+
+       <div class="helptext" style="display: none;"></div>
+       <div class="alert alert-danger" role="alert" style="display: none; width: 100% !important;">
+        <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->
+      </div>
+      <div>
+        <label for="id_name">Название поставщика</label>
+        {{form.name}}
+      </div>
+      <div class="oneLine">
+        <div>
+          <label for="id_supervisor">Имя супервайзера</label>
+        {{form.supervisor}}
+        </div>
+        <div>
+          <label for="id_tel_number_supervisor">Номер Телефона(супервайзер)</label>
+        {{form.tel_number_supervisor}}
+        </div>
+      </div>
+      <div class="oneLine">
+        <div>
+          <label for="id_salesman">Имя торг. представителя</label>
+        {{form.salesman}}
+        </div>
+        <div>
+          <label for="id_tel_number_salesman">Номер Телефона(торг. Представитель)</label>
+        {{form.tel_number_salesman}}
+        </div>
+      </div>
+      <div class="oneLine">
+        <div>
+          <label for="id_delivery">Имя доставки</label>
+        {{form.delivery}}
+        </div>
+        <div>
+          <label for="id_tel_number_delivery">Номер Телефона(доставка)</label>
+        {{form.tel_number_delivery}}
+        </div>
+           
+      </div>
+      <div>
+        <label for="id_extra_info">Доп. информация</label>
+        {{form.extra_info}}
+      </div>
+  
+    <a href="{% url 'sManager:supplier-delete' supplier.id%}" class="btn btn-danger">Удалить</a>
+    <button type="submit" style="margin-left: auto; margin-right: 0;" class="btn btn-success updateSupplier">Изменить</button>
+  </form>
+{% endblock %}
+
+{% block externals %} 
+<script>
+var data_list ={{suppliers|safe}}
+    var dataObject = {};
+const object_id = {{object.id}}
+// Проходим по массиву и добавляем элементы в объект
+for (var i = 0; i < data_list.length; i++) {
+    var id = data_list[i].id;
+    var name = data_list[i].name.toLowerCase().trim();
+
+    // Добавляем элемент в объект
+    if (id != object_id){
+         dataObject[name] = id;
+    }
+}
+
+    const helptext = document.querySelector('.alert.alert-danger')
+
+var name = '';
+var exists = false
+<!--console.log(arrayOfNames)-->
+document.querySelector('input[name="name"]').addEventListener('input', (event) => {
+    name = event.target.value.toLowerCase().trim()
+    if (name in dataObject){
+        helptext.style.display = 'block'
+        console.log(dataObject)
+        helptext.innerHTML =  `Поставщик <a class="alert-link" href="/suppliers/edit/${dataObject[name]}">${name.charAt(0).toUpperCase()}${name.slice(1)}</a> уже существует в вашей базе. Пожалуйста, выберите другое название.`
+        exists = true
+    }
+    else{
+        helptext.style.display = 'none'
+        helptext.innerHTML = ''
+        exists = false
+    }
+
+})
+// alert()
+
+document.querySelector('form button.updateSupplier').addEventListener('click', (event) => {
+  // alert()
+  if(exists){
+    event.preventDefault()
+    window.scrollTo(0,0)
+  }
+  else if(document.querySelector('input[name="name"]').value.length == 0){
+    event.preventDefault()
+    window.scrollTo(0,0)
+    helptext.style.display = 'block'
+    helptext.innerHTML = 'Необходимо ввести название поставщика'
+    
+  }
+  else{
+    document.querySelector('form').submit()
+  }
+
+})        
+    document.querySelectorAll('.tel-number-mask').forEach(each => {
+        IMask(
+        each,
+        {
+            mask: '+7(000)000-00-00'  ,
+          blocks: {
+            num: {
+              // nested masks are available!
+              mask: Number,
+              thousandsSeparator: '.'
+            }
+          }
+        }
+      )
+    
+    })
+    
+    </script>
+    <link rel="stylesheet" href="{% static 'css/sManager/create-supplier.css'%}">
+    
+{% endblock externals %} 

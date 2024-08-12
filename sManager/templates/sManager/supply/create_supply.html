@@ -1,0 +1,51 @@
+{% extends 'general/base.html'%}
+{% load static%}
+
+{% block content %}
+
+<form method="post" autocomplete="off" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- <input type="number" name="num-check" id=""> -->
+     <a onclick="history.back()" class="bi bi-arrow-left return-back" >Вернуться назад</a>
+    <label for="supply_input">Поставщик: </label>
+           
+    <div class="input_with_hints">
+<!-- oninput="show_hints(this)" -->
+      <input name="supply-input" id="supply_input" accesskey="p" type="search" required  class="supply_input" placeholder="ex: Фудмастер" >
+      <div class="helptext" style="display: none;">Введенный вами поставщик отсутствует в вашей базе данных</div>
+      <div class="supplier_hint_list_all">
+        <div class="supplier_hint_list" >
+          <a href="{% url 'sManager:supplier-create'%}" class="bi bi-plus-lg" style="text-decoration: none;">Добавить Поставщика</a>
+          <!-- <a class="bi bi-plus-lg" href="" style="text-decoration: none;"> Добавить</a> -->
+        </div>
+        {% for supplier in suppliers %}
+        <div class="supplier_hint_list forInp" style="display: block;">{{supplier}}</div>
+        {% endfor %}
+      
+        </div>
+      
+        
+        </div>
+    <div class="lineForIntegerInputs">
+        <div>
+            <label for="cost_masked">Сумма:</label>
+            {{form.cost}}
+            <div class="helptext" style="display: none;">Минимальная сумма: 10тг</div>
+           
+        </div>
+        <div><label for="bonus">Бонус:</label>{{form.bonus}}</div>
+        <div><label for="exchange">Обмен:</label>{{form.exchange}}</div>
+        
+    </div>
+    <label for="comment">Комментария</label> {{form.comment}}
+    <label for="date">Дата</label> {{form.date}}
+  
+    
+    <button type="submit" class="btn btn-primary create_supply_btn">Создать</button>
+</form>
+{% endblock content %}
+{% block externals %}
+<link rel="stylesheet" href="{% static 'css/sManager/create_supply.css'%}">
+<script src="{% static 'js/lib/search.js' %}"></script>
+<script src="{% static 'js/create_supply.js'%}"></script>
+{% endblock externals %}

@@ -1,0 +1,43 @@
+ messages.success(
+                self.request,
+                f'Поставка «{form.name}» успешно добавлена.'
+            )
+ messages.success(
+            self.request,
+            f'Поставщик «{form_instance.name}» успешно изменен. '
+        )
+messages.success(
+            self.request,
+            f'Поставщик «{form_instance.name}» успешно создан.'
+        )
+ messages.success(
+            request,
+            f'Поставщик «{self.get_object()}» успешно удален.')
+ messages.success(
+            self.request,
+            f'Поставщик «{form_instance.name}» успешно изменен.'
+        )
+messages.success(
+            request,
+            f'Клиент «{self.get_object()}» успешно обновлен.')
+messages.success(
+            request,
+            f'Клиент «{self.get_object()}» успешно удален.')
+ messages.success(
+            request,
+            f'Долг в размере «{content}» успешно добавлен клиенту «{client_instance}».')
+  messages.success(
+            self.request,
+            f'Долг успешно изменен.'
+        )
+ messages.success(
+            request,
+            f'Поставщик «{self.get_object()}» успешно удален.')
+ messages.success(request, 'Password changed successfully')
+   messages.success(request, 'Информация о пользователе успешно изменена.')
+  messages.success(
+            request,
+            f'Вложение в размере «{content}» успешно создано.')
+     messages.success(
+            request,
+            f'Расход в размере «{content}» успешно создан.')

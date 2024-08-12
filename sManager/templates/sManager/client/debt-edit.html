@@ -1,0 +1,32 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+
+
+  <form method="post" enctype="multipart/form-data" autocomplete="off">
+  
+      
+  <a onclick="history.back()" class="bi bi-arrow-left return-back" >Вернуться назад</a>
+  <h4>Изменение {{object}}</h4>
+  
+      <input type="hidden" name="object_old" value="{{object}}" id="{{object.id}}">
+    {% csrf_token %}
+
+       <div class="helptext" style="display: none;"></div>
+       <div class="alert alert-danger" role="alert" style="display: none; width: 100% !important;">
+        <!-- This is a danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like. -->
+      </div>
+  {{form}}
+  {% if debt_date %}
+  <div><label for="">Дата создания: </label>
+    {{debt_date|date:'l'}}, {{debt_date}}</div>
+  {% endif %}
+  <a href="{% url page object.id%}" class="btn btn-danger">Удалить</a>
+    <button type="submit" style="margin-left: auto; margin-right: 0;" class="btn btn-success updateData">Изменить</button>
+  </form>
+{% endblock %}
+
+{% block externals %} 
+<link rel="stylesheet" href="{% static 'css/sManager/create-supplier.css'%}">
+
+{% endblock externals %} 

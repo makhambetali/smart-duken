@@ -1,0 +1,377 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* border: 1px solid purple !important;   */
+
+}
+
+.return-back {
+  font-size: large;
+
+  /* width:30px; */
+  height: 30px;
+  display: flex;
+  align-items: center;
+  /* margin: 0 !important; */
+  margin-bottom: 10px;
+  /* justify-content: center; */
+  /* border-radius: 50%; */
+  /* border: 1px solid; */
+  width: max-content;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* .return-back:hover {
+  background-color: #8BA8EE !important;
+
+  opacity: 0.9;
+} */
+
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
+  outline: none;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  border: none !important;
+  outline: 1px solid #6161e2 !important;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+
+.product-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+button:not(.phone_form button, .btn.btn-success) {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button.yes-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+button.no-button {
+  background-color: #f44336;
+  color: white;
+}
+
+/* button:not( .box_outline_general button, .sum_button):hover {
+    background-color: #333;
+    color: white;
+} */
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #f5f5f5;
+  height: auto;
+  /* min-width: 800px; */
+  min-width: 100vw;
+}
+
+nav {
+  background-color: #f8f9fa;
+  /* Цвет фона меню */
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+  width: 100%;
+  z-index: 2;
+}
+
+/* Остальные стили остаются без изменений */
+
+
+nav a:not(.create_supply_button) {
+  color: #007bff !important;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  /* margin: 0 10px; */
+  /* transition: 10s !important; */
+  /* transition: background-color 0.6s ease, color 0.6s ease !important; */
+}
+
+nav a:not(.dropdown-menu a) {
+  margin: 0 10px;
+}
+
+nav a:not(.dropdown a, .create_supply_button):hover {
+  background-color: #0056b3;
+  border-radius: 4px;
+  color: white !important;
+  transition: 1s;
+}
+
+.container-custom {
+  flex-direction: column;
+  display: flex;
+  width: 100% !important;
+  margin: auto;
+  min-height: 100vh;
+  height: auto;
+  background-color: #e3e3e3;
+  position: relative !important;
+  width: 100%;
+  /* overflow: hidden; */
+  /* /* border: 1px solid; */
+    /* border: 1px solid;  */
+    /* padding: 20px auto !important; */
+}
+
+
+.bi-trash {
+  color: red !important;
+}
+
+.bi-pencil {
+  color: green !important;
+}
+
+.bi-check-circle,
+.bi-circle {
+  color: #0056b3 !important;
+}
+
+.messages {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.messages li {
+
+  width: 100%;
+  border: 1px solid;
+  position: relative;
+  /* Required for absolute positioning */
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-weight: bold;
+  display: inline-block;
+  transition: opacity 4s ease-in-out;
+  /* box-sizing: content-box; */
+}
+
+.messages li .delete-button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  /* Smooth opacity transition */
+}
+
+.messages li:hover .delete-button,
+.messages li:hover+.message-content+.delete-button+.line_delete {
+  opacity: 1;
+}
+
+.success,
+.warning {
+  background-color: #d4edda;
+  color: #155724;
+
+}
+
+.warning {
+  background-color: #90e0a3;
+  opacity: 1;
+}
+
+.warning.message_hide {
+  opacity: 0;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.info {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.messages li.success .line_delete {
+  position: absolute;
+  width: 95%;
+  /* height: 2px; */
+  border: 1px solid;
+  top: 50%;
+  left: 2%;
+  display: none;
+
+}
+
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media print {
+  #exclude {
+    display: none;
+  }
+}
+
+
+
+
+.create_supply_button {
+
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  gap: 10px;
+
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  color: #0056b3;
+  background-color: transparent;
+  border: 1px solid #0056b3;
+}
+
+.create_supply_button:hover {
+  border: 1px solid #0056b3;
+  color: #fff;
+  background-color: #0056b3;
+  transition: .4s;
+}
+
+.button-nav {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border: 1px solid; */
+  color: #0056b3;
+  background-color: #fff;
+  z-index: 2;
+  font-size: large;
+  font-weight: bold;
+
+}
+
+.button-nav.button-up-page {
+  bottom: 80px;
+  right: 20px;
+}
+
+.button-nav.button-down-page {
+  bottom: 10px;
+  right: 20px;
+}
+
+.helptext {
+  display: block;
+  color: red;
+}
+
+table {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  padding: 20px;
+}
+
+td, th {
+  text-align: left;
+  padding: 8px;
+  border: 2px solid #12121219 !important;
+}
+
+th {
+  width: 10%;
+  background-color: #0056b3 !important;
+  color: #fff !important;
+}
+
+tr {
+  width: 100vw;
+  background-color: #fff;
+
+}
+
+td:hover {
+  user-select: none;
+  cursor: pointer;
+}
+
+/* select {
+  padding: 10px;
+  margin: 10px auto;
+} */
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}

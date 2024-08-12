@@ -1,0 +1,86 @@
+ <div style="display: flex;  " >  
+    <span>Подтверждение поставки:  </span> 
+    <div class="checkbox-wrapper-65">
+    <label for="cbk1-65">
+      <input type="checkbox" class="confirm_checkbox" onchange="changeCheckBox(this)" id="cbk1-65">
+      <span class="cbx">
+        <svg width="30px" height="30px" viewBox="0 0 20 20">
+          <polyline points="1 6.29411765 4.5 10 11 1"></polyline>
+        </svg>
+      </span>
+    
+    </label>
+    </div>
+  </div>
+
+
+  <div style="display: flex; gap: 20px; margin: 10px auto;" class="mix-inputs">
+    <div style="width: 100%;">
+      <label for="mix-cash">Наличка</label>
+      <input type="text" id="mix-cash" name="mix-cash"   required maxlength="10" oninput="check_sum()" value="{{product.cash_amount}}">
+    </div>
+    <div style="width: 100%;">
+      <label for="mix-transfer">Банковский счёт</label>
+      <input type="text" id="mix-transfer" name="mix-transfer" required maxlength="10" oninput="check_sum()" value="{{product.transfer_amount}}">
+    </div>
+  </div>
+  <div class="alert alert-danger mix-warning" style="display: none;">Данные не совпадают: Сумма двух ячеек отличается от общей суммы</div>
+
+
+
+  <div class="imagePreview">
+    <div class="imageEditing">
+      {% for image in product.images.all %}
+
+      <a href="/media/{{image.images}}" target="_top"><img src="/media/{{image.images}}" width="100" alt=""></a>
+    </div>
+  </div>
+
+
+  <script>
+    var state_confirmed =  !!({{form.confirmed.value|yesno:"1,0"}})
+
+var elem = document.querySelector('.confirm_checkbox')
+if(state_confirmed){
+  elem.checked = state_confirmed
+}
+var obj_confirm = {
+  false: 'block',
+  true: 'none'
+}
+const changeCheckBox = ()=> {
+  state_confirmed = !state_confirmed
+  document.querySelectorAll('#id_confirmed option')[+(!state_confirmed)+1].selected = true
+  document.querySelector('.confirmSenstitiveSection').style.display = obj_confirm[state_confirmed]
+}
+changeCheckBox()
+// document.querySelector(`input#${state_payment.id}`).checked = true
+
+console.log(document.querySelector('select'))
+document.querySelector('select#id_payment').addEventListener('change', (event) => {
+if (event.target.value == 'mix'){
+  document.querySelector('.mix-inputs').style.display = 'flex'
+  check_sum()
+}
+else{
+  
+  document.querySelector('.mix-inputs').style.display = 'none'
+}
+})
+document.querySelectorAll('.mix-inputs input').forEach((each,index) => {
+IMask(
+  each,
+  {
+      mask: '₸ num',
+      blocks: {
+          num: {
+              // nested masks are available!
+              mask: Number,
+              thousandsSeparator: '.'
+          }
+      }
+  }
+)
+})
+
+  </script>

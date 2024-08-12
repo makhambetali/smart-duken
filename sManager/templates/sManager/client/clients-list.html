@@ -1,0 +1,57 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="search-add-line">
+    <a class="bi bi-plus-lg"  href="{% url 'sManager:debt' %}" style="text-decoration: none; border: 1px solid; text-align: center;">Добавить</a>
+    <input type="search" id="searchInput" spellcheck="false" placeholder="Поиск клиента">
+</div>
+
+<table id="search-table" class="table table-hover  tableSort" style="width: 98%; margin-left:auto; margin-right:auto ;">
+   
+    <tr>
+        <th>Имя</th>
+        <th class="secondary-data">Номер Телефона</th>
+        <th class="secondary-data">Доп. информация</th>
+        <th style=" overflow: hidden;">Сумма долга
+            <form method="get" action="{% url 'sManager:clients-list' %}" style="border: none !important;" class="sort_form">
+                <select name="sort" onchange="this.form.submit()">
+                    <option value="default" {% if request.GET.sort == "default" %}selected{% endif %}>По умолчанию</option>
+                    <option value="debt_asc" {% if request.GET.sort == "debt_asc" %}selected{% endif %}>Сначала маленькие долги</option>
+                    <option value="debt_desc" {% if request.GET.sort == "debt_desc" %}selected{% endif %}>Сначала большие долги</option>
+                    <option value="oldest" {% if request.GET.sort == "oldest" %}selected{% endif %}>Сначала старые</option>
+                    <option value="newest" {% if request.GET.sort == "newest" %}selected{% endif %}>Сначала новые</option>
+                </select>
+            </form>
+        </th>
+        
+    </tr>
+    {% for client in clients %}
+    <tr onclick="window.location.href = `clients-list/client/edit/{{client.id}}/`">
+        <td>
+            {% if client.is_chosen %}
+                <i class="bi bi-star-fill" style="color: blue;"></i>
+            {% endif %}
+            <a href="{% url 'sManager:client-edit' client.id %}" style="text-decoration: none;">{{ client.name }}</a>
+        </td>
+        
+        <td class="secondary-data">{{client.phone_number}}</td>
+        <td class="secondary-data">{{client.about}}</td>
+        {% if client.debt_sum < 0 %}
+        <td style="background-color: rgb(255,235,156); color: rgb(156,101,0); font-weight: bold;" class="debt_sum currency-text">{{client.debt_sum}}</td>
+        {% else %}
+       
+        <td class="debt_sum currency-text">{{client.debt_sum}}</td>
+        {% endif %}
+
+    </tr>
+    {% empty %}
+    <td colspan="4" style="text-align: center; font-size: large; font-weight: bold;">Клиенты еще не добавлены</td>
+    {% endfor %}
+
+</table>
+{% endblock content %}
+{% block externals %}
+<link rel="stylesheet" href="{% static 'css/sManager/home.css'%}">
+<script src="{% static 'js/lib/search-table.js'%}"></script>
+{% endblock externals %}

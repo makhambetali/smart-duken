@@ -1,0 +1,174 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+<h2 style="margin: 20px auto; ">Транзакции</h2>
+
+<table class="table table-hover date_group show_group">
+    <tr>
+        <th>Операции</th>
+        <th>Сумма</th>
+        <th>Возврат</th>
+        <th>Остаток</th>
+    </tr>
+    
+    {% for transaction in transactions %}
+    <tr>
+        <td>
+            {% for op in transaction.operations %}
+                <a href="{% url 'sManager:debt-edit' op.id %}" style="text-decoration: none;" title="{{ op.date|date:'d-m-Y H:i:s' }}">
+                    {{ op.content }}
+                </a>
+            {% endfor %}
+        </td>
+        <td>{{ transaction.sum }}</td>
+        <td>
+            {% for ref in transaction.refund %}
+                <a href="{% url 'sManager:debt-edit' ref.id %}" style="text-decoration: none;" title="{{ ref.date|date:'d-m-Y H:i:s' }}">
+                    {{ ref.content }}
+                </a>
+            {% endfor %}
+        </td>
+        <td>{{ transaction.balance }}</td>
+    </tr>
+    {% empty %}
+<td colspan="4" style="text-align: center; font-size: large; font-weight: bold;">Записей пока нет</td>
+{% endfor %}
+
+</table>
+<form method="post" autocomplete="off" action="{% url 'sManager:debt-add-from-client' %}">
+    {% csrf_token %}
+    <div style="width: 100%; display: flex; gap: 15px; align-items: center; justify-content: center; flex-direction: column; height: auto;">
+        <!-- <div class="bi bi-chevron-down" style="cursor: pointer;" onclick="open_form()"></div> -->
+         <input type="hidden" value="{{client.id}}" name="clientId">
+        <h2 >Добавить долг </h2>
+        <div style="width: 100%;">
+            <label for="content">Операция</label>
+        <input type="text" class="moneyInput" name="content" id="content" required oninput="check_length('.create_debt_btn', this.value)">
+        </div>
+        <div style="width: 100%;">
+            <label for="description">Доп. информация</label>
+        <input type="text" class="" name="description" id="description">
+        </div>
+       
+    </div>
+ 
+   
+    <button type="submit" class="btn btn-primary create_debt_btn">Добавить</button>
+    </form>
+
+<form method="post" autocomplete="off" class="updateClientForm">
+    <div style="width: 100%; display: flex; gap: 15px; align-items: center; justify-content: center; height: auto;">
+        <!-- <div class="bi bi-chevron-down" style="cursor: pointer;" onclick="open_form()"></div> -->
+        <h2 >Изменение {{client}}</h2>
+       
+    </div>
+    {% csrf_token %}
+    <div class="alert alert-danger" style="display: none;"></div>
+    
+    {{ form.as_p }}
+    <a href="{% url 'sManager:client-delete' client.id%}" class="btn btn-danger">Удалить</a>
+    <button type="submit" class="btn btn-success updateClient">Сохранить</button>
+</form>
+
+
+{% endblock content %}
+{% block externals %}
+<style>
+   
+
+    form{
+        /* height: 65px; */
+        overflow: hidden;
+        padding-top: 12px;
+    }
+</style>
+<link rel="stylesheet" href="{% static 'css/sManager/create-supplier.css'%}">
+
+<script>
+   
+    IMask(
+        document.querySelector('#id_phone_number'),
+        {
+            mask: '+7(000)000-00-00'  ,
+          blocks: {
+            num: {
+              // nested masks are available!
+              mask: Number,
+              thousandsSeparator: '.'
+            }
+          }
+        }
+      )
+</script>    
+<script>
+    var is_closed = true
+    var form = document.querySelector('form')
+    var icon = document.querySelector('.bi-chevron-down');
+    const open_form = () => {
+        if (is_closed){
+            form.style.height = '200px'
+            icon.classList.add('rotate'); 
+          
+        }
+        else{
+            form.style.height = '65px'
+            icon.classList.remove('rotate');
+ 
+        }
+        is_closed = !is_closed
+    }
+    var data_list ={{all_clients|safe}}
+    var dataObject = {};
+const object_id = {{object.id}}
+// Проходим по массиву и добавляем элементы в объект
+for (var i = 0; i < data_list.length; i++) {
+    var id = data_list[i].id;
+    var name = data_list[i].name.toLowerCase().trim();
+
+    // Добавляем элемент в объект
+    if (id != object_id){
+         dataObject[name] = id;
+    }
+}
+
+    const helptext = document.querySelector('.alert.alert-danger')
+
+var name = '';
+var exists = false
+<!--console.log(arrayOfNames)-->
+document.querySelector('input[name="name"]').addEventListener('input', (event) => {
+    name = event.target.value.toLowerCase().trim()
+    if (name in dataObject){
+        helptext.style.display = 'block'
+        console.log(dataObject)
+        helptext.innerHTML =  `Клиент <a class="alert-link" href="/supply/clients-list/client/edit/${dataObject[name]}">${name.charAt(0).toUpperCase()}${name.slice(1)}</a> уже существует в вашей базе. Пожалуйста, выберите другое название.`
+        exists = true
+    }
+    else{
+        helptext.style.display = 'none'
+        helptext.innerHTML = ''
+        exists = false
+    }
+
+})
+
+document.querySelector('form button.updateClient').addEventListener('click', (event) => {
+  if(exists){
+    event.preventDefault()
+    // window.scrollTo(0,0)
+    document.querySelector('.updateClientForm').scrollIntoView()
+  }
+  else if(document.querySelector('input[name="name"]').value.length == 0){
+    event.preventDefault()
+    document.querySelector('.updateClientForm').scrollIntoView()
+    helptext.style.display = 'block'
+    helptext.innerHTML = 'Необходимо ввести название поставщика'
+    
+  }
+  else{
+    document.querySelector('form').submit()
+  }
+
+})        
+</script>
+{% endblock externals %}

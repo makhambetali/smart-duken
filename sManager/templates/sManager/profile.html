@@ -1,0 +1,106 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+<div class="custom-modal" id="customModal">
+    <div class="custom-modal-content">
+        <div class="profile_details_change section_general" style="height: auto;">
+            <form method="post" class="profile_details" id="profile_update" action="{% url 'update_user'%}">
+                {% csrf_token %}
+                <label for="username">Имя Пользователя</label>
+                <input type="text" name="username" id="username" value="{{request.user}}" required>
+                <label for="first_name">Имя</label>
+                <input type="text" name="first_name" id="first_name" value="{{request.user.first_name}}">
+                <label for="last_name">Фамилия</label>
+                <input type="text" name="last_name" id="last_name" value="{{request.user.last_name}}">
+                <label for="email">Email</label>
+                <input type="text" name="email" type="email" id="email" value="{{request.user.email}}" required>
+                <div class="switch_password">
+                    <span> Изменить пароль</span>
+                    <label class="switch">
+                        <input type="checkbox" onchange="togglePassword()">
+                        <span class="slider round"></span>
+
+                    </label>
+
+                </div>
+                <div class="passwordBlock">
+
+                </div>
+
+                <div class="formBtnLine">
+                    <a type="button" class="btn btn-danger" onclick=" window.location.reload()">Отменить</a>
+                    <button type="submit" class="btn btn-success">Изменить</button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+<div class="profile_box">
+
+
+    <div class="profile_details_see">
+
+        <div class="img_part">
+
+            <!-- <img src="{{profile.image.url}}" alt="User Profile Image"> -->
+            {% if profile.image.url %}
+            <div id="context_menu">
+                <a href="{% url 'sManager:delete-profile-photo' id=request.user.id%}" id="delete_option">Delete
+                    Photo</a>
+            </div>
+            <img src="{{profile.image.url}}" alt="User Profile Image">
+            {% else %}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/510px-Default_pfp.svg.png?20220226140232"
+                alt="User Profile Image">
+            {% endif %}
+
+        </div>
+        <div class="details_part">
+            <div class="main_detail">
+                <div class="username">Магазин<span>"{{request.user}}"</span>
+
+                </div>
+                <p>{{request.user.get_full_name}}</p>
+                <small>На сайте с {{request.user.date_joined|date}}</small>
+            </div>
+
+
+            <div class="other_details">
+                <button class="btn  updateBtn bi bi-pencil" onclick="updateUserData()"> Изменить информацию
+                </button>
+                <button class="btn updateBtn ">Закрыть сессию</button>
+
+                </button>
+            </div>
+            <form method="post" enctype="multipart/form-data" class="form_image" style="display: none;">
+                {% csrf_token %}
+                {{ form_image.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
+{% block externals %}
+<link rel="stylesheet" href="{% static 'css/sManager/profile.css'%}">
+<script src="{% static 'js/profile.js'%}"></script>
+<script>
+    var date = new Date();
+    //   var currentDate = date.toISOString().substring(0,10);
+    date.setDate(date.getDate() + 1);
+    var nextDate = date.toISOString().substring(0, 10);
+    // document.querySelector('input[type=date]').value = nextDate</script>
+
+
+{% endblock externals %}

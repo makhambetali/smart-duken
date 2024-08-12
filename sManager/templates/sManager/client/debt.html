@@ -1,0 +1,49 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+<form action="" method="post" autocomplete="off">
+    {% csrf_token %}
+    <div style="display: flex; align-items: center; justify-content: space-between;">
+        <a onclick="history.back()" class="bi bi-arrow-left return-back" >Вернуться назад</a>
+        <a class="btn btn-secondary" href="{% url 'sManager:clients-list'%}"><i class="bi bi-people-fill"></i> Все клиенты</a>
+    </div>
+    <label for="client_input">Клиент: </label>
+           
+    <div class="input_with_hints">
+<!-- oninput="show_hints(this)" -->
+      <input name="client_name" id="client_input" accesskey="p" type="search" value="" required  class="client_input" placeholder="ex: Фудмастер" >
+      <div class="alert alert-warning" style="display: none;">Введенный вами клиент отсутствует в базе данных. После отправки данных он будет добавлен автоматически.</div>
+      <div class="clients_hint_list_all">
+       
+        {% for client in clients %}
+        <div class="clients_hint_list forInp" style="display: block;">{{client}}</div>
+        {% endfor %}
+      
+        </div>
+      
+        
+        </div>  
+        <div class="extra-info" style="display: none; gap:  20px;">
+            <div style="width: 100%;">
+                <label for="tel_number">Номер Телефона</label>
+            <input type="text" class="tel_number" name="tel_number">
+            </div>
+           <div style="width: 100%;">
+            <label for="about">Описание</label>
+            <input type="text" class="about" name="about">
+           </div>
+        </div>
+    {{form.as_p}}
+    <button type="submit" class="btn btn-primary create_debt_btn updateData">Добавить</button>
+</form>
+{% endblock content %}
+{% block externals %}
+<script>
+  
+</script>
+<link rel="stylesheet" href="{% static 'css/sManager/debt.css'%}">
+<script src="{% static 'js/lib/search.js' %}"></script>
+<script src="{% static 'js/debt.js'%}"></script>
+
+
+{% endblock externals %}

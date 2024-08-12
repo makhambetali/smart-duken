@@ -1,0 +1,120 @@
+{% extends 'general/base.html'%}
+{% load static%}
+
+{% block content %}
+
+<div class="custom-modal" id="customModal">
+  <div class="custom-modal-content">
+    <h2>Выберите критерий расчета:</h2>
+    <div class="custom-options-container">
+      <button class="custom-option" id="customCalculateSumButton" >Все</button>
+      <button class="custom-option" >Подтвержденные</button>
+    </div>
+  </div>
+</div>
+<!-- <form method="get" id="filterForm">
+  <label for="confirmationFilter">Filter by confirmation status:</label>
+  <select name="confirmationFilter" id="confirmationFilter" onchange="document.getElementById('filterForm').submit();">
+      <option value="default" {% if filter == "default" %}selected{% endif %}>Default</option>
+      <option value="True" {% if filter == "True" %}selected{% endif %}>Confirmed</option>
+      <option value="False" {% if filter == "False" %}selected{% endif %}>Not Confirmed</option>
+  </select>
+</form> -->
+{% for date, products_list in grouped_products.items %}
+<div class="date-title-general">
+  <div class="date-title" onclick="show_date_group('date_group_{{forloop.counter}}')">{{ date }}, {{date|date:'l'}}</div>
+  <button id="openModalButton" class="sum_button bi bi-calculator" date="{{date|date:'Y-m-d'}}" date_f="{{date}}" today="{{today}}" date_group = "date_group_{{forloop.counter}}" title="Посчитать сумму"></button>
+</div>
+
+<table class="date_group_{{forloop.counter}} date_group show_group table table-hover ">
+    <tr>
+        <th >Поставщик </th>
+        <th >Сумма</th>
+        <th  class="secondary-data" >Бонус</th>
+        <th class="secondary-data"  >Обмен </th>
+        <th class="secondary-data" >Комментарии</th>
+    
+     
+      </tr>
+    
+      {% for product in products_list %}
+
+      <tr id="{{product.id}}"confirmed="{{product.confirmed}}"  product="{{product}}" today='{{today.date}}' date="{{date}}" class="sessionSensible">
+      
+    
+      
+      
+        <td class=" {% if product.confirmed %}bi bi-check-circle{% endif %}"><a href="{% url 'sManager:supplier-edit' pk=product.name.id%}" style="text-decoration: none;">{{product.name|truncatechars:12}}</a>
+          <span title="{{product.date_added}}">
+            <span style="font-size: smaller; color: #a7a4a4; margin-left: 5px;" class="date_added">{{product.date_added|date:'Y-m-d'}}</span>
+            <span style="font-size: smaller; color: #a7a4a4; ">{{product.date_added.time}}</span>
+          </span>
+        </td>
+        <td  onclick="redirectTo('{{product.id}}')"  class="cost_cat " cost="{{product.cost}}" payment="{{product.payment}}" confirmed = '{{product.confirmed}}'>
+          <span class="currency-text">{{product.cost}}</span>
+          {% if product.confirmed %}
+            (<span>{{product.cash_amount}}</span>
+            +
+            <span>{{product.transfer_amount}}</span>)
+          {% endif %}
+        </td>
+        {% if product.bonus == 0%}
+        <td  onclick="redirectTo('{{product.id}}')"  class="secondary-data">{{product.bonus}}</td>
+        {% else %}
+        <td  onclick="redirectTo('{{product.id}}')"  class="secondary-data" style="color:#218838; font-weight: bold;">+{{product.bonus}}</td>
+        {% endif %}
+        {% if product.exchange == 0%}
+        <td  onclick="redirectTo('{{product.id}}')"  class="secondary-data">{{product.exchange}}</td>
+        {% else %}
+        <td   onclick="redirectTo('{{product.id}}')"  class="secondary-data"style="color:#c82333; font-weight: bold;">-{{product.exchange}}</td>
+        {% endif %}
+        <td   onclick="redirectTo('{{product.id}}')"  class="secondary-data" title="{{product.comment}}">{{product.comment|truncatechars:50}}</td>
+        
+       
+
+     
+        </td>
+   
+        </tr>
+    
+        
+      {% endfor %}
+      
+      </table>
+
+     
+      
+      
+
+{% endfor %}
+
+
+{% endblock content %}
+{% block externals %}
+
+<script>
+
+const today = new Date('{{today|date:"Y-m-d"}}').setHours(0, 0, 0, 0);
+const elements = document.querySelectorAll('.date_added');
+
+elements.forEach(elem => {
+  const elemDate = new Date(elem.innerHTML).setHours(0, 0, 0, 0);
+  const dayDiff = (today - elemDate) / (1000 * 60 * 60 * 24);
+
+  if (dayDiff === 0) {
+    elem.innerHTML = 'Сегодня в';
+  } else if (dayDiff === 1) {
+    elem.innerHTML = 'Вчера в';
+  } else if (dayDiff >= 2 && dayDiff <= 3) {
+    elem.innerHTML = `${Math.floor(dayDiff)} дня назад в`;
+  } else {
+    elem.innerHTML = `${Math.floor(dayDiff)} дней назад в`;
+  }
+});
+
+
+    
+</script>
+<link rel="stylesheet" href="{% static 'css/sManager/home.css'%}">
+<script src="{% static 'js/home_page.js'%}"></script>
+{% endblock externals %}

@@ -1,0 +1,36 @@
+{% extends 'general/base.html' %}
+{% load static %}
+{% block content %}
+<div class="delete-confirm">
+    <h2>Подтверждение</h2>
+    <p>Вы действительно хотите удалить "{{ object }}"? <b>Все данные, связанные с ним, будут утеряны без возможности восстановления.</b></p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="confirm-button" disabled>Удалить (7 секунд)</button>
+        <a href="{% url cancel_link %}" class="cancel-link">Отменить</a>
+
+    </form>
+</div>
+{% endblock %}
+
+{% block externals %} 
+<link rel="stylesheet" href="{% static 'css/general/delete_template.css'%}">
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+        let deleteButton = document.querySelector('.confirm-button');
+        let countdown = 0;
+
+        let interval = setInterval(function () {
+            if (countdown > 0) {
+                deleteButton.textContent = `Удалить (${countdown} секунд)`;
+                countdown--;
+            } else {
+                deleteButton.textContent = 'Удалить';
+                deleteButton.disabled = false;
+                clearInterval(interval);
+            }
+        }, 1000);
+    });
+</script>
+{% endblock externals %} 
